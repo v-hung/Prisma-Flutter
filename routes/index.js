@@ -7,25 +7,27 @@ router.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-router.get("/post", async (req, res) => {
+router.get("/api/post", async (req, res) => {
   const posts = await prisma.post.findMany({
     where: { published: false },
     include: { author: true },
   })
   res.json({
-    data: posts
+    data: posts,
+    meta: {}
   })
 });
 
 // router.use("/auth", auth);
 router.use(async (req, res, next) => {
-  next(createError.NotFound("Route not Found"));
+  res.status(404).send({
+    error: {
+      status: 404,
+      name: "",
+      message: "Route not Found",
+      details: {},
+    },
+  })
 });
 
-router.use((err, req, res, next) => {
-  res.status(err.status || 500).json({
-    status: false,
-    message: err.message,
-  });
-});
 module.exports = router;

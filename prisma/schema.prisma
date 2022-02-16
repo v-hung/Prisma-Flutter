@@ -17,8 +17,9 @@ model Post {
 }
 
 model User {
-  email String  @unique(map: "User.email")
   id    Int     @id @default(autoincrement())
+  email String  @unique(map: "User.email")
   name  String?
+  password String
   posts Post[]
 }
