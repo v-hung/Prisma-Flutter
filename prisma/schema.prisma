@@ -8,12 +8,23 @@ datasource db {
 }
 
 model Post {
-  authorId  Int?
+  user_id  Int?
   content   String?
   id        Int     @id @default(autoincrement())
   published Boolean @default(false)
   title     String
-  author    User?   @relation(fields: [authorId], references: [id])
+  user    User?   @relation(fields: [user_id], references: [id])
+}
+
+model Profile {
+  id    Int     @id @default(autoincrement())
+  user_id  Int?
+  image String
+  follower Int
+  following Int
+  user    User?   @relation("user", fields: [user_id], references: [id])
+  userFollowers    User   @relation("followers", fields: [follower], references: [id])
+  userFollowing    User   @relation("following", fields: [following], references: [id])
 }
 
 model User {
@@ -22,4 +33,7 @@ model User {
   name  String?
   password String
   posts Post[]
+  profile Profile[]  @relation("user")
+  followers Profile[]  @relation("followers")
+  following Profile[]  @relation("following")
 }

@@ -1,22 +1,36 @@
 const router = require('express').Router();
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
-const createError = require("http-errors");
+const auth = require('./auth');
 
 router.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-router.get("/api/post", async (req, res) => {
-  const posts = await prisma.post.findMany({
-    where: { published: false },
-    include: { author: true },
-  })
-  res.json({
-    data: posts,
-    meta: {}
-  })
-});
+router.use('/api/auth', auth)
+
+
+const { PrismaClient } = require('@prisma/client')
+router.get("/clear", (req, res) => {
+  const prisma = new PrismaClient();
+  const propertyNames = Object.getOwnPropertyNames(prisma);
+  const modelNames = propertyNames.filter(
+    (propertyName) => !propertyName.startsWith('_')
+  );
+
+  Promise.all(modelNames.map((model) => prisma[model].deleteMany()))
+    .then((values) => {
+      res.status(200).send("Success")
+    })
+    .catch((e) => {
+      res.status(500).send({
+        error: {
+          status: 500,
+          name: "",
+          message: "not clear",
+          details: [],
+        },
+      })
+    })
+})
 
 // router.use("/auth", auth);
 router.use(async (req, res, next) => {
@@ -25,7 +39,7 @@ router.use(async (req, res, next) => {
       status: 404,
       name: "",
       message: "Route not Found",
-      details: {},
+      details: [],
     },
   })
 });

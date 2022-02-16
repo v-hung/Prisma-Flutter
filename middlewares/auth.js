@@ -5,7 +5,7 @@ const auth = async (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1];
 
   if (token == null)
-    return res.sendStatus(401).send({
+    return res.status(401).send({
       error: {
         status: 401,
         name: "Unauthorized",
@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
       next();
     })
     .catch((e) => {
-      res.sendStatus(403).send({
+      res.status(403).send({
         error: {
           status: 403,
           name: "Forbidden",

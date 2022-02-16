@@ -4,24 +4,21 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
 
 module.exports = {
-  signAccessToken(payload) {
-    return new Promise((resolve, reject) => {
-      jwt.sign({ payload }, accessTokenSecret, {}, (err, token) => {
-        if (err) {
-          reject(new Error('Can\'t create token'));
-        }
-        resolve(token);
-      });
-    });
+  signAccessToken: async (payload) =>{
+    try {
+      console.log(payload);
+      const token = await jwt.sign({ payload }, accessTokenSecret, {})
+      return token
+    } catch (error) {
+      throw new Error('Can\'t create token')
+    }
   },
-  verifyAccessToken(token) {
-    return new Promise((resolve, reject) => {
-      jwt.verify(token, accessTokenSecret, (err, payload) => {
-        if (err) {
-          return reject(new Error('Unauthorized'));
-        }
-        resolve(payload);
-      });
-    });
+  verifyAccessToken: async (token) => {
+    try {
+      const { payload } = await jwt.verify(token, accessTokenSecret, {})
+      return payload
+    } catch (error) {
+      throw new Error('Unauthorized')
+    }
   },
 };

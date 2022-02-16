@@ -9,8 +9,8 @@
   },
   "scripts": {
     "dev2": "ts-node ./script.ts",
-    "dev": "npx nodemon ./server.js",
-    "migrate": "npx prisma db pull"
+    "dev": "npx nodemon ./server.js --ignore 'mobile' --ignore 'package.json'",
+    "migrate": "npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "3.7.0",
