@@ -18,13 +18,19 @@ model Post {
 
 model Profile {
   id    Int     @id @default(autoincrement())
-  user_id  Int?
+  user_id  Int
   image String
-  follower Int
-  following Int
-  user    User?   @relation("user", fields: [user_id], references: [id])
-  userFollowers    User   @relation("followers", fields: [follower], references: [id])
-  userFollowing    User   @relation("following", fields: [following], references: [id])
+  following Flollow[] @relation("following")
+  followers Flollow[] @relation("followers")
+  user    User   @relation("user", fields: [user_id], references: [id])
+}
+
+model Flollow {
+  id    Int     @id @default(autoincrement())
+  user_id Int
+  user_follow Int
+  following Profile @relation("following", fields: [user_id], references: [id])
+  followers Profile @relation("followers", fields: [user_follow], references: [id])
 }
 
 model User {
@@ -33,7 +39,5 @@ model User {
   name  String?
   password String
   posts Post[]
-  profile Profile[]  @relation("user")
-  followers Profile[]  @relation("followers")
-  following Profile[]  @relation("following")
+  profile Profile?  @relation("user")
 }
