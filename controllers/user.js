@@ -45,4 +45,55 @@ module.exports = {
       res.status(error?.status || 500).send({ error })
     }
   },
+
+  follow : async (req, res, next) => {
+    try {
+      const { user } = await userModel.findOne(req.user)
+
+      await userModel.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          profile: {
+            update: {
+              followers: {
+                create: {
+                  user_id: user.id,
+                  following: req.following
+                }
+              }
+            }
+          }
+        },
+        include: {
+          profile: {
+            include: {
+              followers: true
+            }
+          }
+        }
+      })
+
+      res.status(200).json({
+        data: user,
+      });
+      
+    } catch (error) {
+      res.status(error?.status || 500).send({ error })
+    }
+  },
+
+  findUserDataById : async (req, res, next) => {
+    try {
+      const { user } = await userModel.findUserDataById(req.params)
+
+      res.status(200).json({
+        data: user,
+      });
+      
+    } catch (error) {
+      res.status(error?.status || 500).send({ error })
+    }
+  },
 };

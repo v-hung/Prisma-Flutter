@@ -7,37 +7,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  user_id  Int?
-  content   String?
+model posts {
   id        Int     @id @default(autoincrement())
-  published Boolean @default(false)
-  title     String
-  user    User?   @relation(fields: [user_id], references: [id])
+  content   String?
+  images     String
+  user_id  Int?
+  user    users?   @relation("user", fields: [user_id], references: [id])
+  reactions post_reactions[] @relation("reactions")
+  comments post_comments[] @relation("comments")
 }
 
-model Profile {
-  id    Int     @id @default(autoincrement())
-  user_id  Int
-  image String
-  following Flollow[] @relation("following")
-  followers Flollow[] @relation("followers")
-  user    User   @relation("user", fields: [user_id], references: [id])
+model post_reactions {
+  id Int @id @default(autoincrement())
+  post_id  Int?
+  type String?
+  post posts? @relation("reactions", fields: [post_id], references: [id])
 }
 
-model Flollow {
-  id    Int     @id @default(autoincrement())
-  user_id Int
-  user_follow Int
-  following Profile @relation("following", fields: [user_id], references: [id])
-  followers Profile @relation("followers", fields: [user_follow], references: [id])
+model post_comments {
+  id Int @id @default(autoincrement())
+  post_id  Int?
+  content String?
+  post    posts?   @relation("comments", fields: [post_id], references: [id])
 }
 
-model User {
+model users {
   id    Int     @id @default(autoincrement())
-  email String  @unique(map: "User.email")
+  email String  @unique()
   name  String?
   password String
-  posts Post[]
-  profile Profile?  @relation("user")
+  posts posts[] @relation("user")
+  profile profiles?
+}
+
+model profiles {
+  id    Int     @id @default(autoincrement())
+  image String 
+  following flollows[] @relation("following")
+  followers flollows[] @relation("followers")
+  user_id  Int?
+  user    users?   @relation(fields: [user_id], references: [id])
+}
+
+model flollows {
+  id    Int     @id @default(autoincrement())
+  user_id Int?
+  user_follow Int?
+  following profiles? @relation("following", fields: [user_id], references: [id])
+  followers profiles? @relation("followers", fields: [user_follow], references: [id])
 }

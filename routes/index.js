@@ -1,13 +1,21 @@
 const router = require('express').Router();
 const auth = require('./auth');
+const post = require('./post')
+const storage = require('./storage')
+const user = require('./user')
 
 router.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+// use router
 router.use('/api/auth', auth)
+router.use('/api/users', user)
+router.use('/api/posts', post)
+router.use('/storage', storage)
 
 
+// clear all database
 const { PrismaClient } = require('@prisma/client')
 router.get("/clear", (req, res) => {
   const prisma = new PrismaClient();
