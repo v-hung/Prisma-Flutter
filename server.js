@@ -1,12 +1,14 @@
 const express = require('express');
 require('@prisma/client');
 const app = express();
+var cors = require('cors')
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));

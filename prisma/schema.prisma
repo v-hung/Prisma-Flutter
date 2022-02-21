@@ -43,16 +43,16 @@ model users {
 model profiles {
   id    Int     @id @default(autoincrement())
   image String 
-  following flollows[] @relation("following")
-  followers flollows[] @relation("followers")
+  following follows[] @relation("following")
+  followers follows[] @relation("followers")
   user_id  Int?
   user    users?   @relation(fields: [user_id], references: [id])
 }
 
-model flollows {
+model follows {
   id    Int     @id @default(autoincrement())
-  user_id Int?
-  user_follow Int?
-  following profiles? @relation("following", fields: [user_id], references: [id])
-  followers profiles? @relation("followers", fields: [user_follow], references: [id])
+  profile_id Int?
+  profile_follow Int?
+  following profiles? @relation("following", fields: [profile_id], references: [id])
+  followers profiles? @relation("followers", fields: [profile_follow], references: [id])
 }

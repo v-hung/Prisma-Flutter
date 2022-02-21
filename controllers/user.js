@@ -48,38 +48,34 @@ module.exports = {
 
   follow : async (req, res, next) => {
     try {
-      const { user } = await userModel.findOne(req.user)
-
-      await userModel.update({
-        where: {
-          id: user.id
-        },
-        data: {
-          profile: {
-            update: {
-              followers: {
-                create: {
-                  user_id: user.id,
-                  following: req.following
-                }
-              }
-            }
-          }
-        },
-        include: {
-          profile: {
-            include: {
-              followers: true
-            }
-          }
-        }
+      const { follow } = await userModel.follow({
+        user_id: req.user.id, 
+        user_follow: req.params.id 
       })
 
       res.status(200).json({
-        data: user,
+        data: follow,
       });
       
     } catch (error) {
+      console.log(error);
+      res.status(error?.status || 500).send({ error })
+    }
+  },
+
+  unFollow : async (req, res, next) => {
+    try {
+      const { follow } = await userModel.unFollow({
+        user_id: req.user.id, 
+        user_follow: req.params.id 
+      })
+
+      res.status(200).json({
+        data: follow,
+      });
+      
+    } catch (error) {
+      console.log(error);
       res.status(error?.status || 500).send({ error })
     }
   },
