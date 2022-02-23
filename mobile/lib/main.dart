@@ -7,9 +7,9 @@ import 'package:mobile/screens/auth/login/login_screen.dart';
 import 'package:mobile/screens/auth/signup/signup_screen.dart';
 import 'package:mobile/screens/auth/welcome/welcome_screen.dart';
 import 'package:mobile/screens/wrapper.dart';
-// import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import 'utils/config.dart';
+import 'providers/storage.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    print(box.read('jwt'));
 
     final UserController? _user = Get.put(UserController());
 

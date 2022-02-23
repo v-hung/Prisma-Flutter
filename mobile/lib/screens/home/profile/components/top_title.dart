@@ -30,7 +30,14 @@ class TopTitle extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
                   image: AssetImage(_user?.user.value?.image ?? ''),
-                  fit: BoxFit.cover
+                  fit: BoxFit.cover,
+                  onError: (error, stackTrace) {
+                    if (_user?.user.value == null)
+                      return;
+                    
+                    _user?.user.value?.image = 'images/user.jpg';
+                    _user?.user.refresh();
+                  },
                 )
               ),
             ),
@@ -62,7 +69,7 @@ class TopTitle extends StatelessWidget {
                       SizedBox(width: 5,),
                       Icon(
                         Icons.edit,
-                        color: Colors.red[600],
+                        color: Colors.green[700],
                         size: 20,
                       )
                     ],

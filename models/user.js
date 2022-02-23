@@ -45,7 +45,6 @@ module.exports = {
       return { user, jwt : token };
     }
     catch(error) {
-      console.log(e);
       throw {
         status: error.status || 500,
         name: error.name || "Internal Server Error",
@@ -87,6 +86,11 @@ module.exports = {
                 }
               }
             }
+          },
+          _count: {
+            select: {
+              posts: true
+            }
           }
         }
       });
@@ -105,22 +109,26 @@ module.exports = {
         throw {
           status: 403,
           name: "",
-          message: "Email address or password not valid",
+          message: "Password not valid",
           details: [],
         };
 
       user = {
         ...user,
+        ...user._count,
         ...user.profile,
-        ...user.profile._count
+        ...user.profile._count,
       }
-
-      console.log(user);
 
       delete user?.password
       delete user?.profile
       delete user?._count
-      const token = await jwt.signAccessToken(user);
+
+      const token = await jwt.signAccessToken({
+        id: user.id,
+        name: user.name,
+        email: user.email
+      });
 
       return { user, jwt : token };
     }
@@ -196,8 +204,6 @@ module.exports = {
         };
       }
 
-      console.log(parseInt(id));
-
       var user = await prisma.users.findUnique({
         where: {
           id: parseInt(id)
@@ -219,7 +225,6 @@ module.exports = {
         }
       })
         .catch((e) => {
-          console.log(e);
           throw {
             status: 404,
             name: "",
@@ -236,8 +241,6 @@ module.exports = {
           details: [],
         };
       }
-
-      console.log(user);
 
       // format user data
       user = {

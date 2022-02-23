@@ -6,7 +6,6 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 module.exports = {
   signAccessToken: async (payload) =>{
     try {
-      console.log(payload);
       const token = await jwt.sign({ payload }, accessTokenSecret, {})
       return token
     } catch (error) {

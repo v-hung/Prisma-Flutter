@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:mobile/providers/user.provider.dart';
 import 'text_infomation.dart';
 
 class MiddleTitle extends StatelessWidget {
@@ -9,29 +10,33 @@ class MiddleTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final UserController? _user = Get.find();
+
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white
       ),
-      child: Row(
+      child: Obx( () => Row(
         children: [
           TextInfomation(
-            number: 128,
-            title: 'Post',
+            number: _user?.user.value?.posts ?? 0,
+            title: 'Posts',
           ),
           Spacer(),
           TextInfomation(
-            number: 3120,
+            number: _user?.user.value?.following ?? 0,
             title: 'Follwing',
           ),
           Spacer(),
           TextInfomation(
-            number: 5024,
-            title: 'Follower',
+            number: _user?.user.value?.followers ?? 0,
+            title: 'Followers',
           ),
         ],
-      ),
+      ),)
     );
   }
 }

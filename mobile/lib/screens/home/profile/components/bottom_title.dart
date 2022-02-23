@@ -29,7 +29,7 @@ class BottomTitle extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.grid_view_rounded),
             onPressed: () {},
-            color: Colors.red,
+            color: kPrimaryColor,
           ),
           IconButton(
             icon: Icon(Icons.image_outlined),

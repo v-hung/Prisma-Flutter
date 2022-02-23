@@ -22,22 +22,22 @@ class HomeScreen extends StatelessWidget {
     // }
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        toolbarHeight: 50,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.red,),
-          onPressed: () {},
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings, color: Colors.red,),
-            onPressed: () {},
-          ),
-          SizedBox(width: 5,)
-        ],
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.white,
+      //   toolbarHeight: 50,
+      //   leading: IconButton(
+      //     icon: Icon(Icons.arrow_back, color: Colors.red,),
+      //     onPressed: () {},
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Icons.settings, color: Colors.grey[900],),
+      //       onPressed: () {},
+      //     ),
+      //     SizedBox(width: 5,)
+      //   ],
+      // ),
       body: ProfileScreen(),
       bottomNavigationBar: Container(
         height: 80,
@@ -58,23 +58,23 @@ class HomeScreen extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.home_outlined, size: 30, color: Colors.red,),
+                icon: Icon(Icons.home_outlined, size: 30, color: kPrimaryColor,),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.calendar_today_outlined, size: 30, color: Colors.red,),
+                icon: Icon(Icons.calendar_today_outlined, size: 30, color: kPrimaryColor,),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.message_outlined, size: 30, color: Colors.red,),
+                icon: Icon(Icons.message_outlined, size: 30, color: kPrimaryColor,),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.notifications_outlined, size: 30, color: Colors.red,),
+                icon: Icon(Icons.notifications_outlined, size: 30, color: kPrimaryColor,),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.person, size: 30, color: Colors.red,),
+                icon: Icon(Icons.person, size: 30, color: kPrimaryColor,),
               ),
             ],
           ),
