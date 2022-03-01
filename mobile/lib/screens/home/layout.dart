@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.calendar_today_outlined, size: 30, color: kPrimaryColor,),
+                icon: Icon(Icons.person_search_outlined, size: 30, color: kPrimaryColor,),
               ),
               IconButton(
                 onPressed: () {},
